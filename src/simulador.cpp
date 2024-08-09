@@ -6,12 +6,12 @@
 #include <fstream>
 #include <sstream>
 
-class Bloco {
-    public:
-        int tag;
-        bool ocupado;
-    Bloco() { ocupado = false; }
-};
+// class Bloco {
+//     public:
+//         int tag;
+//         bool ocupado;
+//     Bloco() { ocupado = false; }
+// };
 
 /*
 
@@ -38,20 +38,19 @@ int main(int argc, char *argv[]) {
     if(argc != 5) return 1;
 
     int tam_cache = std::stoi(argv[1]);
-    int tam_linha = std::stoi(argv[2]); // corresponds to the size of a block
+    int tam_linha = std::stoi(argv[2]); // corresponde ao tamanho de um bloco
     int tam_grupo = std::stoi(argv[3]);
 
     std::string arquivo = std::string(argv[4]);
     std::ifstream file(arquivo);
 
-    int n_linhas = tam_cache / tam_linha; // corresponds to the number of blocks the cache has
-    int n_conjuntos_total = n_linhas / tam_grupo; // number of lines the cache has (defines the index)
+    int n_linhas = tam_cache / tam_linha; // corresponde ao número de blocos que cache tem
+    int n_conjuntos_total = n_linhas / tam_grupo; // número de linhas que cache tem (define o index)
 
     int offset = static_cast<int>(log2(tam_linha));
     int index = static_cast<int>(log2(n_conjuntos_total));
     int tag = 32 - index - offset;
 
-    // Using std::deque instead of std::queue
     std::vector<std::deque<int> > cache(n_conjuntos_total);
 
     printf("%d | %d | %d\n", tag, index, offset);
@@ -67,7 +66,7 @@ int main(int argc, char *argv[]) {
 
     while (std::getline(file, line)) {
         std::stringstream ss;
-        ss << std::hex << line; // Convert the line to hexadecimal
+        ss << std::hex << line; // Converte a linha para hexadecimal
 
         unsigned int number;
         ss >> number;
@@ -83,19 +82,19 @@ int main(int argc, char *argv[]) {
             if (*it == tag_end) {
                 hits++;
                 found = true;
-                // Move the accessed block to the front for LRU (optional)
+                // Apaga o primeiro elemento da fila e adiciona o novo na últimas posição
                 cache[aux].erase(it);
                 cache[aux].push_back(tag_end);
                 break;
             }
         }
 
-        if (!found) {
+        if (!found) { // endereço não tá na cache
             misses++;
-            if (cache[aux].size() >= tam_grupo) {
-                cache[aux].pop_front(); // Evict the oldest block if the set is full
+            if (cache[aux].size() == tam_grupo) {
+                cache[aux].pop_front(); // Retira o primeiro elemento inserido (que é o que tá na primeira posição)
             }
-            cache[aux].push_back(tag_end); // Insert the new block
+            cache[aux].push_back(tag_end); // Insere um novo bloco na última posição da fila
         }
     }
 
