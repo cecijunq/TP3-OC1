@@ -2,7 +2,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
-#include <queue>
+#include <deque>
 #include <fstream>
 #include <sstream>
 
@@ -12,6 +12,29 @@
 //         bool ocupado;
 //     Bloco() { ocupado = false; }
 // };
+
+void imprime_saida(std::vector<std::deque<int> > &cache, int tam_conj, int n_linhas) {
+    int index = 0;
+    int tam = 0;
+
+    // printf("--> %d\n", n_linhas);
+    // printf("--> %d\n", tam_conj);
+    printf("================\nIDX V ** ADDR **\n");
+    for(int i = 0; i < n_linhas; ++i) {
+        tam = 0;
+        for (auto it = cache[i].begin(); it != cache[i].end(); it++) {
+            printf("%03d 1 %x\n", index, *it);
+            index++;
+            tam++;
+        }
+        // printf("--> tam = %d\n", tam);
+        while(tam < tam_conj) {
+            printf("%03d 0\n", index);
+            index++;
+            tam++;
+        }
+    }
+}
 
 /*
 
@@ -25,14 +48,6 @@
  tivermos 4 por grupo, teremos um sistema de associatividade completa.
 
 */
-
-#include <iostream>
-#include <string>
-#include <cmath>
-#include <vector>
-#include <deque>
-#include <fstream>
-#include <sstream>
 
 int main(int argc, char *argv[]) {
     if(argc != 5) return 1;
@@ -52,6 +67,7 @@ int main(int argc, char *argv[]) {
     int tag = 32 - index - offset;
 
     std::vector<std::deque<int> > cache(n_conjuntos_total);
+    // std::vector<std::deque<Bloco> > cache(n_conjuntos_total);
 
     printf("%d | %d | %d\n", tag, index, offset);
 
@@ -64,7 +80,7 @@ int main(int argc, char *argv[]) {
     int hits = 0;
     int misses = 0;
 
-    while (std::getline(file, line)) {
+    while(std::getline(file, line)) {
         std::stringstream ss;
         ss << std::hex << line; // Converte a linha para hexadecimal
 
@@ -78,13 +94,16 @@ int main(int argc, char *argv[]) {
         aux = aux & mask;
 
         bool found = false;
+        // Bloco novo(tag_end);
         for (auto it = cache[aux].begin(); it != cache[aux].end(); ++it) {
+            // if (it->ocupado && it->tag == tag_end) {
             if (*it == tag_end) {
                 hits++;
                 found = true;
                 // Apaga o elemento da sua posição origial e adiciona-o novamente na última posição (pois foi o último elemento acessado)
                 cache[aux].erase(it);
                 cache[aux].push_back(tag_end);
+                // cache[aux].push_back(novo);
                 break;
             }
         }
@@ -95,7 +114,9 @@ int main(int argc, char *argv[]) {
                 cache[aux].pop_front(); // Retira o primeiro elemento inserido (que é o que tá na primeira posição)
             }
             cache[aux].push_back(tag_end); // Insere um novo bloco na última posição da fila
+            // cache[aux].push_back(novo); // Insere um novo bloco na última posição da fila
         }
+        imprime_saida(cache, tam_grupo, n_conjuntos_total);
     }
 
     file.close();
