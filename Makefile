@@ -23,6 +23,7 @@ all: use mem
 
 mem: $(EXE)
 	$(EXE) 4096 1024 1 ./testes/file.txt
+	$(EXE) 4096 1024 2 ./testes/file.txt
 
 use:
 	mkdir -p bin/

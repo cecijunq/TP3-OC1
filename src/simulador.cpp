@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             if (*it == tag_end) {
                 hits++;
                 found = true;
-                // Apaga o primeiro elemento da fila e adiciona o novo na últimas posição
+                // Apaga o elemento da sua posição origial e adiciona-o novamente na última posição (pois foi o último elemento acessado)
                 cache[aux].erase(it);
                 cache[aux].push_back(tag_end);
                 break;
