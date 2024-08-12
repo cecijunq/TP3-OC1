@@ -37,4 +37,4 @@ $(OBJ)/simulador.o: $(HDRS) $(SRC)/simulador.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/simulador.o $(SRC)/simulador.cpp
 
 clean:
-	rm -f $(EXE) $(OBJS) gmon.out
+	rm -f $(EXE) $(OBJS) output.txt gmon.out
