@@ -108,26 +108,37 @@ int main(int argc, char *argv[]) {
             if (it->first == tag_end) {
                 hits++;
                 found = true;
-                // Apaga o elemento da sua posição origial e adiciona-o novamente na última posição (pois foi o último elemento acessado)
-                cache_fila[aux].erase(it);
-                cache_fila[aux].push_back(std::make_pair(tag_end, cache_fila[aux].size()-1));
+                // Apaga o elemento da sua posição original e adiciona-o novamente na última posição
+                //(pois foi o último elemento acessado)
+                //Removidas, fazem parte de outra política (LRU)
+                //cache_fila[aux].erase(it);
+                //cache_fila[aux].push_back(std::make_pair(tag_end, cache_fila[aux].size()-1));
                 break;
             }
         }
 
         if (!found) { // endereço não tá na memória cache
             int pos_cache;
+            misses++;
+
+            // Confere se a cache é vazia, fácil inserção
             if(cache_fila[aux].size() == 0) pos_cache = 0;
             else pos_cache = cache_fila[aux].size();
-            misses++;
+            
+            // Se a cache está cheia, confere a fila e remove o mais antigo
+            // First-in First-out
             if (cache_fila[aux].size() == tam_grupo) {
                 pos_cache = cache_fila[aux].front().second;
-                cache_fila[aux].pop_front(); // Retira o primeiro elemento inserido (que é o que tá na primeira posição)
+                cache_fila[aux].pop_front(); // Retira o primeiro elemento inserido (está na primeira posição)
             }
-            cache_fila[aux].push_back(std::make_pair(tag_end, cache_fila[aux].size())); // Insere um novo bloco na última posição da fila
+
+            // Insere um novo bloco na última posição da fila
+            cache_fila[aux].push_back(std::make_pair(tag_end, cache_fila[aux].size())); 
             _cache[aux][pos_cache].first = tag_end;
             _cache[aux][pos_cache].second = 1;
         }
+
+        //Escreve no arquivo o estado atual da cache
         imprime_saida(outfile, _cache, tam_grupo, n_conjuntos_total);
     }
 
