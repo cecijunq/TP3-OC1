@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     std::vector<std::deque<std::pair<int, int> > > cache_fila(n_conjuntos_total);
     std::vector<std::vector<std::pair<int, int> > > _cache(n_conjuntos_total, std::vector<std::pair<int, int> >(tam_grupo, std::make_pair(0, 0))); // ocupado, tag
 
-    // printf("%d | %d | %d\n", tag, index, offset);
+    printf("%d | %d | %d\n", tag, index, offset);
 
     if (!file.is_open()) {
         printf("Erro ao tentar abrir o arquivo\n");
@@ -100,6 +100,8 @@ int main(int argc, char *argv[]) {
         // aux = aux >> (offset + index);
         int mask = (1 << index) - 1;
         aux = aux & mask;
+
+        printf("--> %d\n", aux);
 
         bool found = false;
         for (auto it = cache_fila[aux].begin(); it != cache_fila[aux].end(); ++it) {
