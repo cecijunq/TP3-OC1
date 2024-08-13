@@ -134,10 +134,8 @@ int main(int argc, char *argv[]) {
     file.close();
 
     fprintf(outfile, "\n#hits: %d\n", hits);
-    fprintf(outfile, "#misses: %d\n\n", misses);
+    fprintf(outfile, "#miss: %d\n\n", misses);
     fclose(outfile);
-
-    // printf("\n#hits = %d\n#misses = %d\n", hits, misses);
 
     return 0;
 }
