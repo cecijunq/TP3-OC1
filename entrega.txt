@@ -16,7 +16,7 @@ Por exemplo, o comando:
 
     ./bin/simulador 4096 1024 4 testes/exemplo1.txt
 
-Irá executar o primeiro arquivo de teste fornecido pelo monitor, com uma cache de 4k, linhas de 1k e associatividade completa.
+Irá executar o primeiro arquivo de teste fornecido pelo monitor, com uma cache de 4KB, linhas de 1KB e associatividade completa.
 
 A saída estará num arquivo output.txt na raiz da pasta.
 

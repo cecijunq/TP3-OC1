@@ -7,17 +7,10 @@
 #include <sstream>
 #include <cctype>
 
-// class Bloco {
-//     public:
-//         int tag;
-//         bool ocupado;
-//     Bloco() { ocupado = false; }
-// };
-
 void imprime_saida(FILE *outfile, std::vector<std::vector<std::pair<int, int> > > &cache, int tam_conj, int n_linhas) {
     int index = 0;
 
-    // Check if the file is open
+    // Checa se o arquivo de escrita está aberto
     if (outfile != NULL) {
         fprintf(outfile, "================\nIDX V ** ADDR **\n");
         for (int i = 0; i < n_linhas; i++) {
@@ -51,16 +44,17 @@ void imprime_saida(FILE *outfile, std::vector<std::vector<std::pair<int, int> > 
 
 int main(int argc, char *argv[]) {
     if(argc != 5) return 1;
+    printf("%d\n", argc);
 
-    FILE *outfile = fopen("output.txt", "a");
+    FILE *outfile = fopen("output.txt", "w");
     if (outfile == NULL) {
         fprintf(stderr, "Error: Could not open file.\n");
         return 1;
     }
 
-    int tam_cache = std::stoi(argv[1]);
+    int tam_cache = std::stoi(argv[1]); // armazena a quantidade de bytes que a cache consegue armazenar
     int tam_linha = std::stoi(argv[2]); // corresponde ao tamanho de um bloco
-    int tam_grupo = std::stoi(argv[3]);
+    int tam_grupo = std::stoi(argv[3]); // indica o tamanho do conjunto
 
     std::string arquivo = std::string(argv[4]);
     std::ifstream file(arquivo);
@@ -70,12 +64,12 @@ int main(int argc, char *argv[]) {
 
     int offset = static_cast<int>(log2(tam_linha));
     int index = static_cast<int>(log2(n_conjuntos_total));
-    int tag = 32 - index - offset;
+    // int tag = 32 - index - offset;
 
     std::vector<std::deque<std::pair<int, int> > > cache_fila(n_conjuntos_total);
     std::vector<std::vector<std::pair<int, int> > > _cache(n_conjuntos_total, std::vector<std::pair<int, int> >(tam_grupo, std::make_pair(0, 0))); // ocupado, tag
 
-    printf("%d | %d | %d\n", tag, index, offset);
+    // printf("%d | %d | %d\n", tag, index, offset);
 
     if (!file.is_open()) {
         printf("Erro ao tentar abrir o arquivo\n");
@@ -101,7 +95,7 @@ int main(int argc, char *argv[]) {
         int mask = (1 << index) - 1;
         aux = aux & mask;
 
-        printf("--> %d\n", aux);
+        // printf("--> %d\n", aux);
 
         bool found = false;
         for (auto it = cache_fila[aux].begin(); it != cache_fila[aux].end(); ++it) {
@@ -145,7 +139,7 @@ int main(int argc, char *argv[]) {
     file.close();
 
     fprintf(outfile, "\n#hits: %d\n", hits);
-    fprintf(outfile, "#miss: %d\n\n", misses);
+    fprintf(outfile, "#miss: %d\n", misses);
     fclose(outfile);
 
     return 0;
