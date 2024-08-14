@@ -1,0 +1,39 @@
+Participantes do grupo:
+Cecília Junqueira - 2022094888
+Felipe Gomide - 2022043213
+Lucas Junqueira - 2022043264
+
+
+# Instruções de compilação:
+
+O compilador de C++ "g++" é necessário para compilação.
+O comando "make" realizará todo o trabalho de compilação.
+
+Existem alguns comandos auxiliares úteis:
+ - make clean: remove o arquivo de output e os conteúdos da pasta obj e bin
+ - make test: roda os casos de teste presentes no Makefile, apenas o último executado aparece de fato no output.txt
+
+
+# Instruções de Execução
+
+Para execução, basta entrar o comando no terminal (substituindo os campos pelos respectivos valores):
+
+    ./bin/simulador <tamanho_cache> <tamanho_linha> <tamanho_grupo> <caminho_arquivo_entrada>
+
+Por exemplo, o comando:
+
+    ./bin/simulador 4096 1024 4 testes/exemplo1.txt
+
+Irá executar o primeiro arquivo de teste fornecido pelo monitor, com uma cache de 4KB, linhas de 1KB e associatividade completa.
+
+
+A saída estará num arquivo output.txt na raiz da pasta.
+A execução de múltiplos testes em simultâneo não é recomendada, pois a execução do código utiliza o modo "write" de abertura de arquivo, logo o conteúdo do código é sobrescrito.
+
+
+# Decisões de Implementação
+
+O índice de grupo do qual um bloco de memória será armazenado é definido a partir do valor dos bits referentes ao índice no endereço de memória.
+
+O valor em hexadecimal a ser representado na saída é composto pelo endereço do bloco, removido apenas o offset, independentemente do tipo de associatividade de bloco.
+(Nos exemplos dados parecia haver alguma mudança dependendo do tipo de associatividade, que não foi explicitada, logo mantivemos o mesmo padrão)

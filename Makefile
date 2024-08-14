@@ -19,9 +19,9 @@ CFLAGS = -g -pg -Wall -std=c++17 -c -I$(INC)
 
 EXE = $(BIN)/simulador
 
-all: use mem
+all: use $(EXE)
 
-mem: $(EXE)
+test: use $(EXE)
 	$(EXE) 4096 1024 4 ./testes/exemplo1.txt
 	$(EXE) 4096 1024 4 ./testes/exemplo2.txt
 	$(EXE) 4096 1024 2 ./testes/exemplo5.txt
@@ -42,4 +42,4 @@ $(OBJ)/simulador.o: $(HDRS) $(SRC)/simulador.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/simulador.o $(SRC)/simulador.cpp
 
 clean:
-	rm -f $(EXE) $(OBJS) output.txt gmon.out
+	rm -f $(EXE) $(OBJS) bin/* output.txt gmon.out
