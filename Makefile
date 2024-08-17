@@ -24,9 +24,9 @@ all: use $(EXE)
 test: use $(EXE)
 	$(EXE) 4096 1024 4 ./testes/exemplo1.txt
 	$(EXE) 4096 1024 4 ./testes/exemplo2.txt
-	$(EXE) 4096 1024 2 ./testes/exemplo5.txt
 	$(EXE) 4096 1024 4 ./testes/exemplo3.txt
 	$(EXE) 4096 1024 4 ./testes/exemplo4.txt
+	$(EXE) 4096 1024 2 ./testes/exemplo5.txt
 #	$(EXE) 4096 1024 1 ./testes/file.txt
 #	$(EXE) 4096 1024 2 ./testes/file.txt
 #	$(EXE) 4096 1024 4 ./testes/file.txt

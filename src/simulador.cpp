@@ -110,10 +110,11 @@ int main(int argc, char *argv[]) {
             cache_fila[aux].push_back(std::make_pair(tag_end, cache_fila[aux].size())); 
             _cache[aux][pos_cache].first = tag_end;
             _cache[aux][pos_cache].second = 1;
+            
+            //Escreve no arquivo o estado atual da cache --> A IMPRESSÃO SÓ É FEITA QUANDO OCORRE UMA MUDANÇA NA CACHE
+            imprime_saida(outfile, _cache, tam_grupo, n_conjuntos_total);
         }
 
-        //Escreve no arquivo o estado atual da cache
-        imprime_saida(outfile, _cache, tam_grupo, n_conjuntos_total);
     }
 
     file.close();

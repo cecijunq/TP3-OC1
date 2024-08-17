@@ -37,3 +37,9 @@ O índice de grupo do qual um bloco de memória será armazenado é definido a p
 
 O valor em hexadecimal a ser representado na saída é composto pelo endereço do bloco, removido apenas o offset, independentemente do tipo de associatividade de bloco.
 (Nos exemplos dados parecia haver alguma mudança dependendo do tipo de associatividade, que não foi explicitada, logo mantivemos o mesmo padrão)
+
+
+# Explicação sobre a saída do simulador
+
+A função "imprime_saida" é chamada apenas quando ocorre uma mudança dos valores que estão armazenados na cache, ou seja, quando ocorre um miss. 
+Implementamos dessa maneira pois, além de ser o que é solicitado no enunciado do projeto, foi o recomendado pelo monitor da diciplina no fórum destino a sanar as dúvida acerca do trabalho.
